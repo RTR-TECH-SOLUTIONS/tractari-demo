@@ -1,0 +1,49 @@
+---
+import { firma } from "../data";
+
+interface Props {
+  /** alb fix (footer, meniu mobil) */
+  variantaClara?: boolean;
+  /** urmareste starea header-ului: alb peste hero, ink dupa scroll */
+  adaptiv?: boolean;
+  class?: string;
+}
+
+const {
+  variantaClara = false,
+  adaptiv = false,
+  class: clasa = "",
+} = Astro.props;
+
+const culoareNume = adaptiv
+  ? "text-ink-950 group-data-[sus=true]:text-white"
+  : variantaClara
+    ? "text-white"
+    : "text-ink-950";
+
+const culoareDescriere = adaptiv
+  ? "border-ink-300 text-ink-500 group-data-[sus=true]:border-white/25 group-data-[sus=true]:text-white/65"
+  : variantaClara
+    ? "border-white/25 text-white/65"
+    : "border-ink-300 text-ink-500";
+---
+
+<span
+  class:list={[
+    "inline-flex items-baseline gap-[0.18em] font-display text-[1.45rem] leading-none font-bold tracking-tight uppercase sm:text-[1.6rem]",
+    clasa,
+  ]}
+>
+  <span class:list={["transition-colors duration-300", culoareNume]}>
+    {firma.numeScurt}
+  </span>
+  <span class="text-rosu-500">{firma.cifra}</span>
+  <span
+    class:list={[
+      "ml-[0.35em] hidden self-center border-l pl-[0.5em] font-sans text-[0.58rem] leading-[1.15] font-medium tracking-[0.02em] normal-case transition-colors duration-300 sm:block",
+      culoareDescriere,
+    ]}
+  >
+    tractări auto<br />asistență rutieră
+  </span>
+</span>

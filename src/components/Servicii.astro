@@ -1,0 +1,89 @@
+---
+import { Image } from "astro:assets";
+import { servicii, firma } from "../data";
+import AntetSectiune from "./AntetSectiune.astro";
+
+const imagini = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/serv-*.jpg",
+  { eager: true },
+);
+
+const ia = (nume: string) => imagini[`../assets/${nume}.jpg`]!.default;
+---
+
+<section id="servicii" class="scroll-mt-24 bg-white py-20 sm:py-28">
+  <div class="container-site">
+    <AntetSectiune
+      titlu="Ce"
+      accent="rezolvăm"
+      text="Opt tipuri de intervenție, cu aceeași regulă: vă spunem la telefon cât costă și cât durează, apoi trimitem mașina potrivită pentru situația dumneavoastră."
+    />
+
+    <div class="mt-14 grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+      {
+        servicii.map((s, i) => (
+          <article class="apare flex flex-col" data-index={i % 3}>
+            <div class="relative overflow-hidden rounded-card bg-ink-100">
+              <Image
+                src={ia(s.imagine)}
+                alt={s.titlu}
+                widths={[400, 700]}
+                sizes="(min-width: 1024px) 360px, (min-width: 768px) 46vw, 92vw"
+                loading="lazy"
+                class="aspect-[16/10] w-full object-cover transition-transform duration-500 ease-[var(--ease-out-soft)] hover:scale-[1.03]"
+              />
+            </div>
+
+            <h3 class="mt-5 text-[1.4rem] text-ink-950">{s.titlu}</h3>
+            <p class="mt-2.5 text-[0.98rem] leading-relaxed text-ink-500">
+              {s.descriere}
+            </p>
+
+            <ul class="mt-4 flex flex-col gap-2 border-t border-ink-100 pt-4">
+              {s.puncte.map((p) => (
+                <li class="flex gap-2.5 text-[0.93rem] text-ink-700">
+                  <span
+                    class="mt-[0.62em] size-1.5 shrink-0 rounded-full bg-rosu-500"
+                    aria-hidden="true"
+                  />
+                  {p}
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href={firma.telefonHref}
+              class="mt-5 inline-flex items-center gap-2 self-start text-[0.95rem] font-semibold text-ink-950 transition-colors duration-150 hover:text-rosu-500"
+            >
+              Sună pentru acest serviciu
+              <span
+                class="block h-px w-6 bg-rosu-500 transition-all duration-200 group-hover:w-9"
+                aria-hidden="true"
+              />
+            </a>
+          </article>
+        ))
+      }
+
+      <!-- umple ultimul slot al grilei si duce discutia la telefon -->
+      <article
+        class="apare flex flex-col justify-center rounded-card bg-ink-950 p-8"
+      >
+        <h3 class="text-[1.4rem] text-white">
+          Situația dumneavoastră nu e în listă?
+        </h3>
+        <p class="mt-2.5 text-[0.98rem] leading-relaxed text-white/60">
+          Sunați și descrieți ce s-a întâmplat. Dispecerul vă spune dacă se
+          rezolvă pe loc, cât durează și cât costă — inclusiv dacă răspunsul e
+          că nu putem ajuta.
+        </p>
+        <a
+          href={firma.telefonHref}
+          class="mt-6 inline-flex items-center justify-center gap-2.5 rounded-xl bg-rosu-500 px-5 py-3.5 font-display text-[1.2rem] font-bold tracking-tight text-white uppercase transition-colors duration-200 hover:bg-rosu-600"
+        >
+          <span class="cifre">{firma.telefon}</span>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>

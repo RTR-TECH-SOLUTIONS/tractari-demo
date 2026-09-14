@@ -1,0 +1,48 @@
+---
+interface Props {
+  titlu: string;
+  accent?: string;
+  text?: string;
+  clar?: boolean;
+  aliniereStanga?: boolean;
+  class?: string;
+}
+
+const {
+  titlu,
+  accent,
+  text,
+  clar = false,
+  aliniereStanga = false,
+  class: clasa = "",
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "apare",
+    aliniereStanga ? "max-w-[46rem]" : "mx-auto max-w-[46rem] text-center",
+    clasa,
+  ]}
+>
+  <h2
+    class:list={[
+      "titlu-sectiune uppercase",
+      clar ? "text-white" : "text-ink-950",
+    ]}
+  >
+    {titlu}{accent && <> <em>{accent}</em></>}
+  </h2>
+  {
+    text && (
+      <p
+        class:list={[
+          "mt-4 text-[1.05rem] leading-relaxed",
+          clar ? "text-white/65" : "text-ink-500",
+        ]}
+      >
+        {text}
+      </p>
+    )
+  }
+</div>

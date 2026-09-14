@@ -1,0 +1,273 @@
+---
+import { firma, categoriiVehicul } from "../data";
+import AntetSectiune from "./AntetSectiune.astro";
+---
+
+<section id="contact" class="scroll-mt-24 bg-ink-50 py-20 sm:py-28">
+  <div class="container-site">
+    <AntetSectiune
+      titlu="Cere o"
+      accent="intervenție"
+      text="Cel mai rapid rămâne telefonul. Dacă nu puteți vorbi sau nu știți exact unde vă aflați, completați formularul: îl trimitem pe WhatsApp cu locația dumneavoastră atașată."
+    />
+
+    <div class="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_22rem]">
+      <!-- Formular -->
+      <div class="apare rounded-card border border-ink-100 bg-white p-6 sm:p-9">
+        <h3 class="text-[1.4rem] text-ink-950">Trimiteți datele pe WhatsApp</h3>
+        <p class="mt-1.5 text-[0.95rem] text-ink-500">
+          Se deschide WhatsApp cu mesajul deja scris. Nu trimitem nimic fără
+          confirmarea dumneavoastră.
+        </p>
+
+        <form id="form-interventie" class="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2" novalidate>
+          <div class="sm:col-span-1">
+            <label for="nume" class="block text-[0.88rem] font-medium text-ink-700">
+              Numele dumneavoastră
+            </label>
+            <input
+              type="text"
+              id="nume"
+              name="nume"
+              required
+              autocomplete="name"
+              placeholder="Ex: Andrei Popescu"
+              class="mt-2 w-full rounded-xl border border-ink-300 bg-white px-4 py-3 text-ink-950 transition-colors duration-150 placeholder:text-ink-500/60 focus:border-rosu-500 focus:outline-none"
+            />
+          </div>
+
+          <div class="sm:col-span-1">
+            <label for="telefon" class="block text-[0.88rem] font-medium text-ink-700">
+              Telefon
+            </label>
+            <input
+              type="tel"
+              id="telefon"
+              name="telefon"
+              required
+              autocomplete="tel"
+              inputmode="tel"
+              placeholder="07xx xxx xxx"
+              class="mt-2 w-full rounded-xl border border-ink-300 bg-white px-4 py-3 text-ink-950 transition-colors duration-150 placeholder:text-ink-500/60 focus:border-rosu-500 focus:outline-none cifre"
+            />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="locatie" class="block text-[0.88rem] font-medium text-ink-700">
+              Unde se află mașina
+            </label>
+            <input
+              type="text"
+              id="locatie"
+              name="locatie"
+              required
+              placeholder="Stradă, reper sau kilometru pe autostradă"
+              class="mt-2 w-full rounded-xl border border-ink-300 bg-white px-4 py-3 text-ink-950 transition-colors duration-150 placeholder:text-ink-500/60 focus:border-rosu-500 focus:outline-none"
+            />
+          </div>
+
+          <div class="sm:col-span-1">
+            <label for="vehicul" class="block text-[0.88rem] font-medium text-ink-700">
+              Tip vehicul
+            </label>
+            <select
+              id="vehicul"
+              name="vehicul"
+              class="mt-2 w-full rounded-xl border border-ink-300 bg-white px-4 py-3 text-ink-950 transition-colors duration-150 focus:border-rosu-500 focus:outline-none"
+            >
+              {
+                categoriiVehicul.map((c, i) => (
+                  <option value={c.eticheta} selected={i === 1}>
+                    {c.eticheta} — {c.exemplu}
+                  </option>
+                ))
+              }
+              <option value="Motocicletă / ATV">Motocicletă / ATV</option>
+              <option value="Utilaj">Utilaj</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-1">
+            <label for="cand" class="block text-[0.88rem] font-medium text-ink-700">
+              Când aveți nevoie
+            </label>
+            <select
+              id="cand"
+              name="cand"
+              class="mt-2 w-full rounded-xl border border-ink-300 bg-white px-4 py-3 text-ink-950 transition-colors duration-150 focus:border-rosu-500 focus:outline-none"
+            >
+              <option value="acum, e urgent">Acum, e urgent</option>
+              <option value="în următoarele ore">În următoarele ore</option>
+              <option value="programat, altă zi">Programat, altă zi</option>
+            </select>
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="problema" class="block text-[0.88rem] font-medium text-ink-700">
+              Ce s-a întâmplat
+            </label>
+            <textarea
+              id="problema"
+              name="problema"
+              rows="4"
+              placeholder="Ex: nu mai pornește, e în parcare subterană la bloc; sau: am făcut pană și nu am roată de rezervă"
+              class="mt-2 w-full resize-y rounded-xl border border-ink-300 bg-white px-4 py-3 text-ink-950 transition-colors duration-150 placeholder:text-ink-500/60 focus:border-rosu-500 focus:outline-none"
+            ></textarea>
+          </div>
+
+          <div class="sm:col-span-2">
+            <p
+              id="eroare-form"
+              hidden
+              role="alert"
+              class="mb-4 rounded-xl border border-rosu-500/30 bg-rosu-50 px-4 py-3 text-[0.9rem] text-rosu-700"
+            >
+            </p>
+
+            <button
+              type="submit"
+              class="inline-flex w-full items-center justify-center gap-2.5 rounded-xl bg-[#1fa855] px-6 py-4 font-display text-[1.25rem] font-bold tracking-tight text-white uppercase transition-colors duration-200 hover:bg-[#18904a] sm:w-auto"
+            >
+              <svg class="size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.48-1.75-1.65-2.05-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.69.25-1.28.17-1.41-.07-.13-.27-.2-.57-.35ZM12.04 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.38 9.38 0 0 1-1.44-5.01c0-5.18 4.22-9.4 9.42-9.4a9.34 9.34 0 0 1 6.65 2.76 9.32 9.32 0 0 1 2.75 6.65c0 5.18-4.22 9.41-9.41 9.41ZM20.5 3.49A11.78 11.78 0 0 0 12.04 0C5.5 0 .18 5.32.17 11.86c0 2.09.55 4.13 1.59 5.93L.07 24l6.35-1.66a11.85 11.85 0 0 0 5.62 1.43h.01c6.54 0 11.86-5.32 11.87-11.86a11.8 11.8 0 0 0-3.42-8.42Z"
+                ></path>
+              </svg>
+              Deschide WhatsApp
+            </button>
+
+            <p class="mt-3 text-[0.82rem] text-ink-500">
+              Nu aveți WhatsApp? Sunați direct la
+              <a
+                href={firma.telefonHref}
+                class="font-semibold text-rosu-500 hover:text-rosu-600 cifre"
+                >{firma.telefon}</a
+              >.
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Contact direct -->
+      <div class="apare flex flex-col gap-4" data-index="1">
+        <a
+          href={firma.telefonHref}
+          class="group rounded-card bg-rosu-500 p-7 text-center text-white transition-colors duration-200 hover:bg-rosu-600"
+        >
+          <span class="text-[0.85rem] font-medium text-white/75">
+            Dispecerat non-stop
+          </span>
+          <span
+            class="mt-2 block font-display text-[2.05rem] leading-none font-bold tracking-tight cifre"
+          >
+            {firma.telefon}
+          </span>
+          <span class="mt-3 block text-[0.85rem] text-white/75">
+            Răspundem la primul apel
+          </span>
+        </a>
+
+        <dl class="flex flex-col gap-px overflow-hidden rounded-card border border-ink-100 bg-ink-100">
+          <div class="bg-white px-6 py-5">
+            <dt class="text-[0.78rem] tracking-wide text-ink-500">E-mail</dt>
+            <dd class="mt-1">
+              <a
+                href={`mailto:${firma.email}`}
+                class="font-semibold text-ink-950 hover:text-rosu-500"
+              >
+                {firma.email}
+              </a>
+              <p class="mt-0.5 text-[0.85rem] text-ink-500">
+                pentru oferte de flotă și facturi
+              </p>
+            </dd>
+          </div>
+
+          <div class="bg-white px-6 py-5">
+            <dt class="text-[0.78rem] tracking-wide text-ink-500">Baza</dt>
+            <dd class="mt-1 font-semibold text-ink-950">{firma.adresa}</dd>
+          </div>
+
+          <div class="bg-white px-6 py-5">
+            <dt class="text-[0.78rem] tracking-wide text-ink-500">Program</dt>
+            <dd class="mt-1 font-semibold text-ink-950">{firma.program}</dd>
+          </div>
+        </dl>
+
+        <div class="rounded-card border border-ink-100 bg-white px-6 py-6">
+          <h3 class="text-[1.05rem] text-ink-950">
+            Ce ne ajută să vă spunem prețul din primul apel
+          </h3>
+          <ol class="mt-4 flex flex-col gap-3">
+            {
+              [
+                "Marca și modelul mașinii",
+                "Strada sau un reper apropiat",
+                "Dacă pornește, dacă rulează, dacă are toate roțile",
+                "Unde vreți să o ducem",
+              ].map((x, i) => (
+                <li class="flex gap-3 text-[0.92rem] leading-snug text-ink-700">
+                  <span
+                    class="mt-[0.1em] font-display text-[0.85rem] font-bold text-rosu-500 cifre"
+                    aria-hidden="true"
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {x}
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline define:vars={{ whatsapp: firma.whatsapp }}>
+  (() => {
+    const form = document.getElementById("form-interventie");
+    if (!form) return;
+    const eroare = document.getElementById("eroare-form");
+
+    form.addEventListener("submit", (ev) => {
+      ev.preventDefault();
+      const date = new FormData(form);
+      const val = (n) => String(date.get(n) ?? "").trim();
+
+      const lipsa = [];
+      if (!val("nume")) lipsa.push("numele");
+      if (!val("telefon")) lipsa.push("telefonul");
+      if (!val("locatie")) lipsa.push("locația mașinii");
+
+      if (lipsa.length) {
+        const lista =
+          lipsa.length > 1
+            ? `${lipsa.slice(0, -1).join(", ")} și ${lipsa.at(-1)}`
+            : lipsa[0];
+        eroare.textContent = `Mai avem nevoie de ${lista}.`;
+        eroare.hidden = false;
+        const primul = form.querySelector("input:invalid, input[value='']");
+        (primul ?? form.querySelector("#nume"))?.focus();
+        return;
+      }
+      eroare.hidden = true;
+
+      const mesaj =
+        `Bună ziua! Am nevoie de intervenție.\n\n` +
+        `Nume: ${val("nume")}\n` +
+        `Telefon: ${val("telefon")}\n` +
+        `Locație: ${val("locatie")}\n` +
+        `Vehicul: ${val("vehicul")}\n` +
+        `Când: ${val("cand")}\n` +
+        (val("problema") ? `Situația: ${val("problema")}` : "");
+
+      // TODO(real): pe langa WhatsApp, trimite si catre dispecerat (Resend / Supabase)
+      window.open(
+        `https://wa.me/${whatsapp}?text=${encodeURIComponent(mesaj)}`,
+        "_blank",
+        "noopener",
+      );
+    });
+  })();
+</script>

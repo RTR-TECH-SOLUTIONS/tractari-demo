@@ -1,0 +1,47 @@
+---
+const puncte = [
+  {
+    titlu: "Preț spus la telefon",
+    text: "Îl aflați înainte să plece mașina. Nu se renegociază la fața locului.",
+  },
+  {
+    titlu: "Platformă, nu cârlig",
+    text: "Mașina urcă pe platou și se fixează cu chingi pe jantă, nu pe caroserie.",
+  },
+  {
+    titlu: "Tarif unic, zi și noapte",
+    text: "Nu percepem tarif dublu noaptea, în weekend sau de sărbători.",
+  },
+  {
+    titlu: "Șoferul, direct la telefon",
+    text: "Primiți numărul șoferului care vine la dumneavoastră, nu doar al dispeceratului.",
+  },
+];
+---
+
+<section class="border-y border-ink-800 bg-ink-950" aria-labelledby="titlu-incredere">
+  <div class="container-site">
+    <h2 id="titlu-incredere" class="sr-only">Cum lucrăm</h2>
+    <ul class="grid grid-cols-1 gap-px bg-ink-800 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        puncte.map((p, i) => (
+          <li
+            class="apare bg-ink-950 px-1 py-7 sm:px-6 lg:px-5"
+            data-index={i}
+          >
+            <span
+              class="block font-display text-[0.8rem] font-bold tracking-[0.08em] text-rosu-500 cifre"
+              aria-hidden="true"
+            >
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <h3 class="mt-2 text-[1.15rem] text-white">{p.titlu}</h3>
+            <p class="mt-1.5 text-[0.92rem] leading-relaxed text-white/55">
+              {p.text}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

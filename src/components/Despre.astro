@@ -1,0 +1,98 @@
+---
+import { Image } from "astro:assets";
+import { firma } from "../data";
+import despreImg from "../assets/despre.jpg";
+
+const ani = new Date().getFullYear() - firma.anInfiintare;
+
+const valori = [
+  {
+    titlu: "Prețul se stabilește înainte, nu după",
+    text: "Dispecerul are în față același tabel de tarife pe care îl vedeți și dumneavoastră pe site. Suma spusă la telefon este cea din chitanță.",
+  },
+  {
+    titlu: "Mașina se fixează pe jantă, nu pe caroserie",
+    text: "Chingi cu cârlig pe jantă și pene de roată. E singura metodă care nu lasă urme pe praguri, pe bare și pe suspensii.",
+  },
+  {
+    titlu: "Vorbiți direct cu omul care vine",
+    text: "După ce confirmăm intervenția, primiți pe SMS numărul șoferului. Îl puteți suna dacă între timp s-a schimbat ceva.",
+  },
+];
+
+const cifre = [
+  { valoare: String(ani), unitate: "ani", eticheta: `pe drum, din ${firma.anInfiintare}` },
+  { valoare: "4", unitate: "mașini", eticheta: "platforme și autospeciale" },
+  { valoare: "6+1", unitate: "", eticheta: "sectoare București și Ilfov" },
+];
+---
+
+<section class="relative isolate overflow-hidden bg-ink-950 py-20 sm:py-28">
+  <div class="container-site">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div class="apare">
+        <h2 class="titlu-sectiune text-white uppercase">
+          Cine <em>suntem</em>
+        </h2>
+        <p class="mt-5 text-[1.05rem] leading-relaxed text-white/65">
+          {firma.nume} este o firmă de tractări din {firma.adresa.split(",").slice(-1)[0].trim()},
+          pornită în {firma.anInfiintare} cu o singură platformă. Astăzi suntem patru
+          mașini și un dispecerat care răspunde non-stop. Lucrăm cu șoferi
+          angajați, nu cu subcontractori chemați de pe grupuri.
+        </p>
+
+        <ul class="mt-9 flex flex-col gap-7">
+          {
+            valori.map((v) => (
+              <li class="relative pl-6">
+                <span
+                  class="absolute top-[0.6em] left-0 size-2 rounded-full bg-rosu-500"
+                  aria-hidden="true"
+                />
+                <h3 class="text-[1.2rem] text-white">{v.titlu}</h3>
+                <p class="mt-1.5 text-[0.96rem] leading-relaxed text-white/55">
+                  {v.text}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="apare relative" data-index="1">
+        <div class="overflow-hidden rounded-card">
+          <Image
+            src={despreImg}
+            alt="Operator fixând roata unui autoturism cu lanț, pe platoul platformei"
+            widths={[600, 1000, 1400]}
+            sizes="(min-width: 1024px) 560px, 92vw"
+            loading="lazy"
+            class="aspect-[4/3] w-full object-cover"
+          />
+        </div>
+
+        <dl
+          class="mt-5 grid grid-cols-3 gap-px overflow-hidden rounded-card border border-ink-800 bg-ink-800"
+        >
+          {
+            cifre.map((c) => (
+              <div class="bg-ink-900 px-4 py-5 text-center">
+                <dt class="font-display text-[1.9rem] leading-none font-bold text-white cifre">
+                  {c.valoare}
+                  {c.unitate && (
+                    <span class="ml-1 text-[0.9rem] font-semibold text-white/45">
+                      {c.unitate}
+                    </span>
+                  )}
+                </dt>
+                <dd class="mt-1.5 text-[0.78rem] leading-snug text-white/45">
+                  {c.eticheta}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

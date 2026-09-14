@@ -1,0 +1,189 @@
+---
+import { firma, nav } from "../data";
+import Logo from "./Logo.astro";
+---
+
+<header
+  id="header"
+  data-sus="true"
+  class="group fixed inset-x-0 top-0 z-50 h-[var(--header-h)] transition-[background-color,box-shadow,border-color] duration-300 data-[sus=false]:border-b data-[sus=false]:border-ink-100 data-[sus=false]:bg-white/95 data-[sus=false]:shadow-[0_1px_20px_rgba(13,17,23,0.07)] data-[sus=false]:backdrop-blur-md data-[sus=true]:bg-transparent"
+>
+  <div class="container-site flex h-full items-center justify-between gap-4">
+    <a
+      href="#top"
+      class="shrink-0"
+      aria-label={`${firma.nume} — acasă`}
+    >
+      <Logo adaptiv />
+    </a>
+
+    <nav aria-label="Navigare principală" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="rounded-lg px-3 py-2 text-[0.95rem] font-medium transition-colors duration-150 group-data-[sus=false]:text-ink-700 group-data-[sus=false]:hover:bg-ink-50 group-data-[sus=false]:hover:text-ink-950 group-data-[sus=true]:text-white/80 group-data-[sus=true]:hover:bg-white/10 group-data-[sus=true]:hover:text-white"
+              >
+                {item.eticheta}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={firma.telefonHref}
+        class="hidden items-center gap-2.5 rounded-xl bg-rosu-500 px-5 py-3 font-semibold text-white shadow-[0_6px_20px_-6px_rgba(213,20,39,0.55)] transition-all duration-200 hover:bg-rosu-600 hover:shadow-[0_10px_26px_-8px_rgba(213,20,39,0.65)] sm:inline-flex"
+      >
+        <svg
+          class="size-[1.05rem]"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"
+          ></path>
+        </svg>
+        <span class="cifre">{firma.telefon}</span>
+      </a>
+
+      <button
+        type="button"
+        id="buton-meniu"
+        aria-expanded="false"
+        aria-controls="meniu-mobil"
+        class="inline-flex size-11 items-center justify-center rounded-xl border transition-colors duration-200 group-data-[sus=false]:border-ink-200 group-data-[sus=false]:text-ink-900 group-data-[sus=true]:border-white/25 group-data-[sus=true]:text-white lg:hidden"
+      >
+        <span class="sr-only">Deschide meniul</span>
+        <svg
+          class="size-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Meniu mobil -->
+<div
+  id="meniu-mobil"
+  hidden
+  class="fixed inset-0 z-[60] bg-ink-950/97 backdrop-blur-sm lg:hidden"
+>
+  <div
+    class="container-site flex h-[var(--header-h)] items-center justify-between"
+  >
+    <Logo variantaClara />
+    <button
+      type="button"
+      id="buton-inchide"
+      class="inline-flex size-11 items-center justify-center rounded-xl border border-white/20 text-white"
+    >
+      <span class="sr-only">Închide meniul</span>
+      <svg
+        class="size-6"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+    </button>
+  </div>
+
+  <nav aria-label="Navigare mobilă" class="container-site pt-6">
+    <ul class="flex flex-col divide-y divide-white/10 border-y border-white/10">
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="flex items-center justify-between py-4 font-display text-2xl font-bold tracking-tight text-white uppercase"
+            >
+              {item.eticheta}
+              <span class="text-rosu-500">/</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a
+      href={firma.telefonHref}
+      class="mt-8 flex items-center justify-center gap-3 rounded-xl bg-rosu-500 px-6 py-4 font-display text-2xl font-bold tracking-tight text-white"
+    >
+      <span class="cifre">{firma.telefon}</span>
+    </a>
+    <p class="mt-3 text-center text-sm text-white/55">
+      Dispecerat non-stop, inclusiv sărbători
+    </p>
+  </nav>
+</div>
+
+<script>
+  const header = document.getElementById("header");
+  const meniu = document.getElementById("meniu-mobil");
+  const butonMeniu = document.getElementById("buton-meniu");
+  const butonInchide = document.getElementById("buton-inchide");
+
+  // Header transparent cat timp hero-ul e sub el, solid dupa ce l-am depasit.
+  // Observam hero-ul insusi (nu o santinela la baza lui): pe mobil hero-ul
+  // poate depasi 100svh, iar o santinela jos ar cadea sub fold de la inceput.
+  if (header) {
+    const hero = document.getElementById("top");
+    if (hero) {
+      const inaltimeHeader = () =>
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue(
+            "--header-h",
+          ),
+        ) * 16 || 80;
+
+      const observer = new IntersectionObserver(
+        ([intrare]) => {
+          header.dataset.sus = String(intrare.isIntersecting);
+        },
+        { rootMargin: `-${Math.round(inaltimeHeader())}px 0px 0px 0px` },
+      );
+      observer.observe(hero);
+    } else {
+      header.dataset.sus = "false";
+    }
+  }
+
+  const comutaMeniu = (deschis: boolean) => {
+    if (!meniu || !butonMeniu) return;
+    meniu.hidden = !deschis;
+    butonMeniu.setAttribute("aria-expanded", String(deschis));
+    document.documentElement.style.overflow = deschis ? "hidden" : "";
+    if (deschis) meniu.querySelector<HTMLAnchorElement>("a")?.focus();
+  };
+
+  butonMeniu?.addEventListener("click", () => comutaMeniu(true));
+  butonInchide?.addEventListener("click", () => comutaMeniu(false));
+  meniu?.querySelectorAll("a").forEach((a) =>
+    a.addEventListener("click", () => comutaMeniu(false)),
+  );
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && meniu && !meniu.hidden) comutaMeniu(false);
+  });
+</script>

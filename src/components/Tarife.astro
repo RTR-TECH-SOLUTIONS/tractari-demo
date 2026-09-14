@@ -1,0 +1,188 @@
+---
+import { tarifeOras, tarifeKm, tarifeSuplimentare, firma } from "../data";
+import AntetSectiune from "./AntetSectiune.astro";
+
+const rezumat = [
+  {
+    titlu: "Tractare în București",
+    pret: "89",
+    unitate: "lei",
+    detaliu: "tarif de pornire, până la 1.000 kg",
+  },
+  {
+    titlu: "În afara orașului",
+    pret: "2,00",
+    unitate: "lei / km",
+    detaliu: "de la, calculat pe distanța parcursă",
+  },
+  {
+    titlu: "Asistență pe loc",
+    pret: "80",
+    unitate: "lei",
+    detaliu: "de la, fără tractare — pornire, roată, combustibil",
+  },
+];
+---
+
+<section id="tarife" class="scroll-mt-24 bg-ink-50 py-20 sm:py-28">
+  <div class="container-site">
+    <AntetSectiune
+      titlu="Tarife"
+      accent="transparente"
+      text="Tabelele de mai jos sunt cele pe care le are și dispecerul în față când vă răspunde la telefon. Prețul comunicat atunci este prețul final, dacă situația este cea descrisă."
+    />
+
+    <!-- Rezumat -->
+    <div class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-3">
+      {
+        rezumat.map((r, i) => (
+          <div
+            class="apare rounded-card border border-ink-100 bg-white p-7"
+            data-index={i}
+          >
+            <h3 class="text-[1.05rem] font-semibold text-ink-700">{r.titlu}</h3>
+            <p class="mt-3 font-display text-[3rem] leading-none font-bold text-rosu-500 cifre">
+              {r.pret}
+              <span class="ml-1.5 text-[1.1rem] font-semibold text-ink-500">
+                {r.unitate}
+              </span>
+            </p>
+            <p class="mt-3 text-[0.9rem] leading-relaxed text-ink-500">
+              {r.detaliu}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Tabele detaliate -->
+    <div class="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div class="apare rounded-card border border-ink-100 bg-white">
+        <div class="border-b border-ink-100 px-6 py-5 sm:px-7">
+          <h3 class="text-[1.25rem] text-ink-950">Tractare în București</h3>
+          <p class="mt-1 text-[0.88rem] text-ink-500">
+            tarif fix, oriunde între sectoare
+          </p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-[0.95rem]">
+            <thead>
+              <tr class="border-b border-ink-100 text-[0.78rem] tracking-wide text-ink-500">
+                <th scope="col" class="px-6 py-3 font-medium sm:px-7">
+                  Greutate vehicul
+                </th>
+                <th scope="col" class="hidden px-3 py-3 font-medium sm:table-cell">
+                  Exemple
+                </th>
+                <th scope="col" class="px-6 py-3 text-right font-medium sm:px-7">
+                  Preț
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-ink-100">
+              {
+                tarifeOras.map((t) => (
+                  <tr>
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-ink-900 sm:px-7 cifre"
+                    >
+                      {t.greutate}
+                    </th>
+                    <td class="hidden px-3 py-4 text-ink-500 sm:table-cell">
+                      {t.exemplu}
+                    </td>
+                    <td class="px-6 py-4 text-right sm:px-7">
+                      <span class="font-display text-[1.45rem] font-bold text-ink-950 cifre">
+                        {t.pret}
+                      </span>
+                      <span class="ml-1 text-[0.85rem] text-ink-500">lei</span>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="apare rounded-card border border-ink-100 bg-white" data-index="1">
+        <div class="border-b border-ink-100 px-6 py-5 sm:px-7">
+          <h3 class="text-[1.25rem] text-ink-950">În afara Bucureștiului</h3>
+          <p class="mt-1 text-[0.88rem] text-ink-500">
+            tarif pe kilometru, dus-întors inclus
+          </p>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-[0.95rem]">
+            <thead>
+              <tr class="border-b border-ink-100 text-[0.78rem] tracking-wide text-ink-500">
+                <th scope="col" class="px-6 py-3 font-medium sm:px-7">
+                  Greutate vehicul
+                </th>
+                <th scope="col" class="px-6 py-3 text-right font-medium sm:px-7">
+                  Tarif
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-ink-100">
+              {
+                tarifeKm.map((t) => (
+                  <tr>
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-ink-900 sm:px-7 cifre"
+                    >
+                      {t.greutate}
+                    </th>
+                    <td class="px-6 py-4 text-right sm:px-7">
+                      <span class="font-display text-[1.45rem] font-bold text-ink-950 cifre">
+                        {t.pret}
+                      </span>
+                      <span class="ml-1 text-[0.85rem] text-ink-500">lei/km</span>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="border-t border-ink-100 px-6 py-5 sm:px-7">
+          <h4
+            class="text-[0.78rem] font-semibold tracking-wide text-ink-500 uppercase"
+          >
+            Situații speciale
+          </h4>
+          <dl class="mt-3 flex flex-col divide-y divide-ink-100">
+            {
+              tarifeSuplimentare.map((t) => (
+                <div class="flex items-baseline justify-between gap-4 py-2.5">
+                  <dt class="text-[0.93rem] text-ink-700">{t.denumire}</dt>
+                  <dd class="shrink-0 text-[0.95rem] font-semibold text-ink-950 cifre">
+                    {t.pret}
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <p
+      class="apare mt-7 flex flex-col gap-3 rounded-card border border-ink-100 bg-white px-6 py-5 text-[0.92rem] text-ink-500 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <span>
+        Tarifele includ TVA. Pentru utilaje, transport internațional sau flote,
+        prețul se stabilește la telefon.
+      </span>
+      <a
+        href={firma.telefonHref}
+        class="shrink-0 font-semibold text-rosu-500 hover:text-rosu-600 cifre"
+      >
+        {firma.telefon}
+      </a>
+    </p>
+  </div>
+</section>

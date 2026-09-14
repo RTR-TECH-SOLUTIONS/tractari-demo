@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import { flota } from "../data";
+import AntetSectiune from "./AntetSectiune.astro";
+
+const imagini = import.meta.glob<{ default: ImageMetadata }>(
+  "../assets/flota-*.jpg",
+  { eager: true },
+);
+
+const ia = (nume: string) => imagini[`../assets/${nume}.jpg`]!.default;
+---
+
+<section id="flota" class="scroll-mt-24 bg-ink-50 py-20 sm:py-28">
+  <div class="container-site">
+    <AntetSectiune
+      titlu="Cu ce"
+      accent="venim"
+      text="Patru mașini, fiecare pentru alt tip de intervenție. Dispecerul o trimite pe cea potrivită, nu pe cea liberă."
+    />
+
+    <div class="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
+      {
+        flota.map((f, i) => (
+          <article
+            class="apare overflow-hidden rounded-card border border-ink-100 bg-white"
+            data-index={i % 2}
+          >
+            <div class="relative">
+              <Image
+                src={ia(f.imagine)}
+                alt={f.titlu}
+                widths={[600, 1000]}
+                sizes="(min-width: 1024px) 560px, 92vw"
+                loading="lazy"
+                class="aspect-[16/9] w-full object-cover"
+              />
+              <div
+                class="absolute inset-x-0 bottom-0 bg-[linear-gradient(0deg,rgba(13,17,23,0.92)_0%,transparent_100%)] px-6 pt-16 pb-5"
+              >
+                <h3 class="text-[1.45rem] text-white">{f.titlu}</h3>
+              </div>
+            </div>
+
+            <div class="p-6 sm:p-7">
+              <p class="text-[0.98rem] leading-relaxed text-ink-500">
+                {f.descriere}
+              </p>
+
+              <dl class="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-ink-100 sm:grid-cols-4">
+                {f.specificatii.map((s) => (
+                  <div class="bg-ink-50 px-3.5 py-3">
+                    <dt class="text-[0.72rem] tracking-wide text-ink-500">
+                      {s.eticheta}
+                    </dt>
+                    <dd class="mt-0.5 font-display text-[1.05rem] font-bold text-ink-950 cifre">
+                      {s.valoare}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,96 @@
+---
+import { firma, servicii, nav } from "../data";
+import Logo from "./Logo.astro";
+
+const an = new Date().getFullYear();
+---
+
+<footer class="bg-ink-950 pt-16 pb-10 text-white/60">
+  <div class="container-site">
+    <div class="grid grid-cols-1 gap-10 border-b border-ink-800 pb-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]">
+      <div>
+        <Logo variantaClara />
+        <p class="mt-4 max-w-[34ch] text-[0.95rem] leading-relaxed">
+          Tractări auto pe platformă și asistență rutieră în {firma.zona}.
+          Dispecerat non-stop, tarif unic zi și noapte.
+        </p>
+
+        <dl class="mt-6 flex flex-col gap-2.5 text-[0.95rem]">
+          <div class="flex gap-2">
+            <dt class="sr-only">Telefon</dt>
+            <dd>
+              <a
+                href={firma.telefonHref}
+                class="font-display text-[1.35rem] font-bold tracking-tight text-white hover:text-rosu-500 cifre"
+                >{firma.telefon}</a
+              >
+            </dd>
+          </div>
+          <div>
+            <dt class="sr-only">E-mail</dt>
+            <dd>
+              <a href={`mailto:${firma.email}`} class="hover:text-white">
+                {firma.email}
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="sr-only">Adresă</dt>
+            <dd>{firma.adresa}</dd>
+          </div>
+          <div>
+            <dt class="sr-only">Program</dt>
+            <dd>{firma.program}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <nav aria-label="Servicii">
+        <h2 class="text-[0.78rem] font-semibold tracking-[0.06em] text-white/50 uppercase">
+          Servicii
+        </h2>
+        <ul class="mt-4 flex flex-col gap-2.5 text-[0.95rem]">
+          {
+            servicii.slice(0, 6).map((s) => (
+              <li>
+                <a href="#servicii" class="hover:text-white">
+                  {s.titlu}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <nav aria-label="Pagini">
+        <h2 class="text-[0.78rem] font-semibold tracking-[0.06em] text-white/50 uppercase">
+          Pe site
+        </h2>
+        <ul class="mt-4 flex flex-col gap-2.5 text-[0.95rem]">
+          {
+            nav.map((n) => (
+              <li>
+                <a href={n.href} class="hover:text-white">
+                  {n.eticheta}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        {/* TODO(real): paginile legale se adauga la proiectul real (GDPR, cookies, ANPC/SOL) */}
+      </nav>
+    </div>
+
+    <div
+      class="flex flex-col gap-3 pt-7 text-[0.85rem] sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>
+        © {an} {firma.nume} · CUI {firma.cui}
+      </p>
+      <p class="text-white/50">
+        Demo de prezentare. Datele firmei și fotografiile sunt orientative.
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,33 @@
+---
+import { etape } from "../data";
+import AntetSectiune from "./AntetSectiune.astro";
+---
+
+<section class="bg-white py-20 sm:py-28">
+  <div class="container-site">
+    <AntetSectiune
+      titlu="Cum decurge"
+      accent="intervenția"
+      text="Patru pași, de la apel până la descărcarea mașinii. Fără drumuri făcute degeaba și fără surprize la plată."
+    />
+
+    <ol class="mt-14 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        etape.map((e, i) => (
+          <li class="apare relative" data-index={i}>
+            <span
+              class="font-display text-[3.2rem] leading-none font-bold text-ink-100 cifre"
+              aria-hidden="true"
+            >
+              {e.numar}
+            </span>
+            <h3 class="mt-2 text-[1.3rem] text-ink-950">{e.titlu}</h3>
+            <p class="mt-2.5 text-[0.96rem] leading-relaxed text-ink-500">
+              {e.text}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

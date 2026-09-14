@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Tokens                                                              */
+/* ------------------------------------------------------------------ */
+@theme {
+  --font-display: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  /* rosu de interventie - singurul accent tare */
+  --color-rosu-50: #fef2f3;
+  --color-rosu-100: #fde3e5;
+  --color-rosu-500: #d51427;
+  --color-rosu-600: #b91021;
+  --color-rosu-700: #97101d;
+
+  /* galben de girofar - folosit cu zgarcenie */
+  --color-galben-400: #fbc02d;
+  --color-galben-500: #f9ad18;
+
+  /* grafit */
+  --color-ink-950: #0d1117;
+  --color-ink-900: #161b22;
+  --color-ink-800: #21262d;
+  --color-ink-700: #30363d;
+  --color-ink-500: #6b7280;
+  --color-ink-300: #cbd2d9;
+  --color-ink-100: #eef1f4;
+  --color-ink-50: #f6f8fa;
+
+  --radius-card: 0.75rem;
+
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+:root {
+  --header-h: 5rem;
+  --bara-mobil-h: 0rem;
+  color-scheme: light;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --header-h: 4.25rem;
+    --bara-mobil-h: 4.5rem;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Baza                                                                */
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink-900);
+    background: #fff;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    padding-bottom: var(--bara-mobil-h);
+    overflow-x: hidden;
+  }
+
+  /* Rajdhani are diacriticele RO (Ț, Ș, Ă, Â, Î) inalte si cu sedila joasa,
+     asa ca titlurile au nevoie de mai mult aer decat un font latin obisnuit. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+
+  h1 {
+    line-height: 1.06;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-galben-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-rosu-500);
+    color: #fff;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Utilitare                                                           */
+/* ------------------------------------------------------------------ */
+@utility container-site {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+}
+
+/* cifrele se citesc mai bine tabular */
+@utility cifre {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Titlu de sectiune: accentul cade pe al doilea cuvant                */
+/* ------------------------------------------------------------------ */
+.titlu-sectiune {
+  font-size: clamp(2rem, 1.35rem + 2.6vw, 3.25rem);
+}
+
+.titlu-sectiune em {
+  font-style: normal;
+  color: var(--color-rosu-500);
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero pe ecrane scurte (laptop 1280x680 si similare)                 */
+/* Pe latime e destul loc, dar pe inaltime nu: stramtam ritmul vertical */
+/* ca metricile sa ramana vizibile fara scroll.                         */
+/* ------------------------------------------------------------------ */
+@media (min-width: 640px) and (max-height: 820px) {
+  .hero h1 {
+    font-size: clamp(2.4rem, 1rem + 4.4vw, 4.2rem);
+  }
+
+  .hero .hero-spatiu-titlu {
+    margin-top: 1.25rem;
+  }
+
+  .hero .hero-spatiu-text {
+    margin-top: 1rem;
+  }
+
+  .hero .hero-spatiu-butoane {
+    margin-top: 1.5rem;
+  }
+
+  .hero .hero-spatiu-metrici {
+    margin-top: 2.25rem;
+  }
+
+  .hero .hero-metrica {
+    padding-block: 0.9rem;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Entrance discret la scroll                                          */
+/* ------------------------------------------------------------------ */
+.apare {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s var(--ease-out-soft),
+    transform 0.6s var(--ease-out-soft);
+}
+
+.apare.vizibil {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .apare {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

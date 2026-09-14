@@ -1,0 +1,47 @@
+---
+import { recenzii } from "../data";
+import AntetSectiune from "./AntetSectiune.astro";
+---
+
+<section class="bg-ink-50 py-20 sm:py-28">
+  <div class="container-site">
+    <AntetSectiune
+      titlu="Ce spun"
+      accent="clienții"
+      text="Recenzii primite după intervenții din ultimele luni, în București și Ilfov."
+    />
+
+    <div class="mt-14 columns-1 gap-6 md:columns-2 lg:columns-3 [&>*]:mb-6">
+      {
+        recenzii.map((r, i) => (
+          <figure
+            class="apare break-inside-avoid rounded-card border border-ink-100 bg-white p-7"
+            data-index={i % 3}
+          >
+            <div class="flex gap-0.5" aria-label="5 din 5 stele">
+              {Array.from({ length: 5 }).map(() => (
+                <svg
+                  class="size-4 text-[color:var(--color-galben-500)]"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path d="M10 1.6l2.47 5.29 5.53.72-4.07 3.85 1.05 5.54L10 14.3l-4.98 2.7 1.05-5.54L2 7.61l5.53-.72L10 1.6z" />
+                </svg>
+              ))}
+            </div>
+
+            <blockquote class="mt-4 text-[0.98rem] leading-relaxed text-ink-700">
+              {r.text}
+            </blockquote>
+
+            <figcaption class="mt-5 border-t border-ink-100 pt-4 text-[0.88rem]">
+              <span class="font-semibold text-ink-950">{r.nume}</span>
+              <span class="text-ink-500"> · {r.context}</span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

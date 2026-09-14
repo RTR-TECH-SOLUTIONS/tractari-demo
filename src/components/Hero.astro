@@ -1,0 +1,122 @@
+---
+import { Image } from "astro:assets";
+import { firma } from "../data";
+import heroImg from "../assets/hero.jpg";
+
+const metrici = [
+  { valoare: "15–35", unitate: "min", eticheta: "timp de intervenție în București" },
+  { valoare: "89", unitate: "lei", eticheta: "tarif de pornire, tractare în oraș" },
+  { valoare: "24/7", unitate: "", eticheta: "dispecerat, inclusiv sărbători" },
+];
+---
+
+<section id="top" class="hero relative isolate flex min-h-[100svh] flex-col bg-ink-950">
+  <!-- Fotografie -->
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <Image
+      src={heroImg}
+      alt="Autoturism ridicat pe platformă de tractare, la lăsarea serii"
+      widths={[900, 1400, 2000]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="size-full object-cover object-[32%_center]"
+    />
+    <div
+      class="absolute inset-0 bg-[linear-gradient(180deg,rgba(13,17,23,0.84)_0%,rgba(13,17,23,0.66)_42%,rgba(13,17,23,0.9)_100%)]"
+    >
+    </div>
+    <div
+      class="absolute inset-0 bg-[radial-gradient(85%_70%_at_46%_42%,transparent_0%,rgba(13,17,23,0.72)_100%)]"
+    >
+    </div>
+  </div>
+
+  <div
+    class="container-site flex flex-1 flex-col items-center justify-center pt-[calc(var(--header-h)+2rem)] pb-10 text-center"
+  >
+    <!-- Bară de stare dispecerat -->
+    <p
+      class="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.07] px-4 py-2 text-[0.82rem] font-medium text-white/85 backdrop-blur-sm"
+    >
+      <span class="relative flex size-2">
+        <span
+          class="absolute inline-flex size-full animate-ping rounded-full bg-[color:var(--color-galben-400)] opacity-70"
+        ></span>
+        <span
+          class="relative inline-flex size-2 rounded-full bg-[color:var(--color-galben-400)]"
+        ></span>
+      </span>
+      Dispecerat deschis acum · {firma.zona}
+    </p>
+
+    <h1
+      class="hero-spatiu-titlu mt-7 max-w-[20ch] text-[clamp(2.6rem,1.1rem+6.2vw,5.6rem)] text-white uppercase"
+    >
+      Tractări auto<span class="text-white/40"> și</span><br />
+      <span class="text-rosu-500">asistență rutieră</span>
+    </h1>
+
+    <p class="hero-spatiu-text mt-6 max-w-[50ch] text-[1.05rem] text-balance text-white/80 sm:text-[1.15rem]">
+      Platformă cu rampe hidraulice, oriunde în {firma.zona}. Ajungem în <strong
+        class="font-semibold whitespace-nowrap text-[color:var(--color-galben-400)]"
+        >15–35 de minute</strong
+      > și vă spunem prețul la telefon, înainte să plece mașina.
+    </p>
+
+    <div
+      class="hero-spatiu-butoane mt-9 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
+    >
+      <a
+        href={firma.telefonHref}
+        class="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-rosu-500 px-7 py-4 font-display text-[1.35rem] font-bold tracking-tight text-white uppercase shadow-[0_12px_34px_-10px_rgba(213,20,39,0.8)] transition-all duration-200 hover:bg-rosu-600 hover:shadow-[0_16px_40px_-12px_rgba(213,20,39,0.9)] sm:w-auto"
+      >
+        <svg
+          class="size-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"
+          ></path>
+        </svg>
+        <span class="cifre">{firma.telefon}</span>
+      </a>
+
+      <a
+        href="#calculator"
+        class="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/25 px-7 py-4 font-semibold text-white transition-colors duration-200 hover:border-white/50 hover:bg-white/10 sm:w-auto"
+      >
+        Calculează tariful
+      </a>
+    </div>
+
+    <!-- Metrici -->
+    <dl
+      class="hero-spatiu-metrici mt-14 grid w-full max-w-3xl grid-cols-1 gap-px overflow-hidden rounded-xl border border-white/12 bg-white/12 sm:grid-cols-3"
+    >
+      {
+        metrici.map((m) => (
+          <div class="hero-metrica bg-ink-950/60 px-5 py-5 backdrop-blur-sm">
+            <dt class="font-display text-[2rem] leading-none font-bold text-white cifre">
+              {m.valoare}
+              {m.unitate && (
+                <span class="ml-1 text-[1rem] font-semibold text-white/50">
+                  {m.unitate}
+                </span>
+              )}
+            </dt>
+            <dd class="mt-2 text-[0.82rem] leading-snug text-white/60">
+              {m.eticheta}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

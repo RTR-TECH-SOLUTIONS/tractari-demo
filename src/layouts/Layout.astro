@@ -1,0 +1,74 @@
+---
+import "../styles/global.css";
+import { firma } from "../data";
+
+interface Props {
+  titlu?: string;
+  descriere?: string;
+}
+
+const {
+  titlu = `${firma.nume} — Tractări auto și asistență rutieră ${firma.zona}`,
+  descriere = `Tractări auto pe platformă și asistență rutieră non-stop în ${firma.zona}. Intervenție în 15-35 de minute, preț comunicat la telefon înainte de plecare. ${firma.telefon}.`,
+} = Astro.props;
+
+// pe GitHub Pages site-ul stă într-un subfolder, deci fișierele din public/
+// au nevoie de prefixul de bază
+const favicon = `${import.meta.env.BASE_URL}/favicon.svg`.replace(/\/{2,}/g, "/");
+---
+
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{titlu}</title>
+    <meta name="description" content={descriere} />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="icon" href={favicon} type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Rajdhani:wght@600;700&display=swap"
+    />
+  </head>
+
+  <body>
+    <a
+      href="#continut"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-ink-950 focus:px-4 focus:py-3 focus:text-white"
+    >
+      Sari la conținut
+    </a>
+    <slot />
+
+    <script>
+      // Entrance discret la scroll
+      const tinte = document.querySelectorAll<HTMLElement>(".apare");
+      if (
+        tinte.length &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        const observer = new IntersectionObserver(
+          (intrari) => {
+            for (const intrare of intrari) {
+              if (!intrare.isIntersecting) continue;
+              const el = intrare.target as HTMLElement;
+              const index = Number(el.dataset.index ?? 0);
+              el.style.transitionDelay = `${Math.min(index, 5) * 70}ms`;
+              el.classList.add("vizibil");
+              observer.unobserve(el);
+            }
+          },
+          { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+        );
+        tinte.forEach((t) => observer.observe(t));
+      } else {
+        tinte.forEach((t) => t.classList.add("vizibil"));
+      }
+    </script>
+  </body>
+</html>
